@@ -127,9 +127,6 @@ Variant ConnectionMessageFactory::GetInvokeConnectError(uint32_t channelId, uint
 
 Variant ConnectionMessageFactory::GetInvokeConnectError(Variant request,
 		string decription, string level, string code) {
-	double objectEncoding = 0;
-	if (M_INVOKE_PARAM(request, 0).HasKey(RM_INVOKE_PARAMS_RESULT_OBJECTENCODING))
-		objectEncoding = M_INVOKE_PARAM(request, 0)[RM_INVOKE_PARAMS_RESULT_OBJECTENCODING];
 	return GetInvokeConnectError(
 			VH_CI(request),
 			VH_SI(request),
