@@ -109,9 +109,7 @@ bool InboundAESProtocol::SignalInputData(IOBuffer &buffer) {
 	_totalDecrypted += decryptedSize;
 
 	//6. Decrypt leftovers
-	bool transferCompleted = false;
 	if (((HTTPBufferProtocol *) GetFarProtocol())->TransferCompleted()) {
-		transferCompleted = true;
 		EVP_DecryptFinal_ex(&_decContex,
 				pTempData + decryptedSize,
 				&decryptedFinalSize);

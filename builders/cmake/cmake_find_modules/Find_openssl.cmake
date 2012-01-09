@@ -20,6 +20,7 @@ FIND_LIBRARY(OPENSSL_LIBRARY_PATH
 	PATHS
 		/opt/local/lib
 		/usr/lib64
+		/usr/lib/x86_64-linux-gnu/
 		/usr/lib
 		/usr/local/lib64
 		/usr/local/lib
@@ -35,6 +36,7 @@ FIND_LIBRARY(CRYPTO_LIBRARY_PATH
 		/opt/local/lib
 		/usr/lib64
 		/usr/lib
+		/usr/lib/x86_64-linux-gnu/
 		/usr/local/lib64
 		/usr/local/lib
 		/sw/lib
@@ -50,6 +52,7 @@ IF($ENV{COMPILE_STATIC} MATCHES "1")
 			/opt/local/lib
 			/usr/lib64
 			/usr/lib
+			/usr/lib/x86_64-linux-gnu/
 			/usr/local/lib64
 			/usr/local/lib
 			/sw/lib

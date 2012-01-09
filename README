@@ -1,3 +1,6 @@
+This is an improved version with various fixes not in the original crtmpd tree. 
+
+
 Instructions how to compile and use C++ RTMP Server (a.k.a crtmpserver)
 
 Requirements:
