@@ -41,6 +41,8 @@ distribution.
 #include <sstream>
 using namespace std;
 
+#include <cstddef>
+
 // Help out windows:
 #if defined( _DEBUG ) && !defined( DEBUG )
 #define DEBUG
