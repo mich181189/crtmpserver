@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (c) 2010,
  *  Gavriloaie Eugen-Andrei (shiretu@gmail.com)
  *
@@ -311,6 +311,10 @@ uint32_t BaseRTMPProtocol::GetOutboundChunkSize() {
 	return _outboundChunkSize;
 }
 
+uint32_t BaseRTMPProtocol::GetInboundChunkSize() {
+	return _inboundChunkSize;
+}
+
 bool BaseRTMPProtocol::SetInboundChunkSize(uint32_t chunkSize) {
 	/*WARN("Chunk size changed for RTMP connection %p: %u->%u", this,
 			_inboundChunkSize, chunkSize);*/
@@ -355,8 +359,8 @@ bool BaseRTMPProtocol::CloseStream(uint32_t streamId, bool createNeutralStream) 
 	}
 
 	if (_streams[streamId] == NULL) {
-		FATAL("Try to close a NULL stream");
-		return false;
+		WARN("Try to close a NULL stream");
+		return true;
 	}
 
 	if (TAG_KIND_OF(_streams[streamId]->GetType(), ST_OUT_NET_RTMP)) {
@@ -442,10 +446,8 @@ InNetRTMPStream * BaseRTMPProtocol::CreateINS(uint32_t channelId,
 	delete _streams[streamId];
 	_streams[streamId] = NULL;
 
-	InNetRTMPStream *pStream = new InNetRTMPStream(this,
-			GetApplication()->GetStreamsManager(), streamName, streamId,
-			_inboundChunkSize, channelId);
-
+	InNetRTMPStream *pStream = _pProtocolHandler->CreateInNetStream(this,
+			channelId, streamId, streamName);
 	_streams[streamId] = pStream;
 
 	return pStream;
@@ -459,18 +461,18 @@ BaseOutNetRTMPStream * BaseRTMPProtocol::CreateONS(uint32_t streamId,
 	}
 
 	if (_streams[streamId] == NULL) {
-		FATAL("Try to play a stream on a NULL placeholder");
-		return NULL;
-	}
+		WARN("Try to play a stream on a NULL placeholder");
+	} else {
 
-	if (_streams[streamId]->GetType() != ST_NEUTRAL_RTMP) {
-		FATAL("Try to play a stream over a non neutral stream: id: %u; type: %"PRIu64,
-				streamId, _streams[streamId]->GetType());
-		return NULL;
-	}
+		if (_streams[streamId]->GetType() != ST_NEUTRAL_RTMP) {
+			FATAL("Try to play a stream over a non neutral stream: id: %u; type: %"PRIu64,
+					streamId, _streams[streamId]->GetType());
+			return NULL;
+		}
 
-	delete _streams[streamId];
-	_streams[streamId] = NULL;
+		delete _streams[streamId];
+		_streams[streamId] = NULL;
+	}
 
 	BaseOutNetRTMPStream *pBaseOutNetRTMPStream = BaseOutNetRTMPStream::GetInstance(
 			this, GetApplication()->GetStreamsManager(), streamName, streamId,

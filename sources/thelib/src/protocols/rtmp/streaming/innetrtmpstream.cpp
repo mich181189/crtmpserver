@@ -26,12 +26,12 @@
 #include "protocols/rtmp/streaming/outfilertmpflvstream.h"
 #include "streaming/streamstypes.h"
 
-InNetRTMPStream::InNetRTMPStream(BaseProtocol *pProtocol,
+InNetRTMPStream::InNetRTMPStream(BaseRTMPProtocol *pProtocol,
 		StreamsManager *pStreamsManager, string name,
-		uint32_t rtmpStreamId, uint32_t chunkSize, uint32_t channelId)
+		uint32_t rtmpStreamId, uint32_t channelId)
 : BaseInNetStream(pProtocol, pStreamsManager, ST_IN_NET_RTMP, name) {
 	_rtmpStreamId = rtmpStreamId;
-	_chunkSize = chunkSize;
+	_chunkSize = pProtocol->GetInboundChunkSize();
 	_channelId = channelId;
 	_clientId = format("%d_%d_%"PRIz"u", _pProtocol->GetId(), _rtmpStreamId, (size_t)this);
 	_lastVideoTime = 0;
@@ -187,28 +187,10 @@ bool InNetRTMPStream::SendOnStatusStreamPublished() {
 	return true;
 }
 
-bool InNetRTMPStream::RecordFLV(Variant &meta, bool append) {
-	//1. Compute the file name
-	string fileName = meta[META_SERVER_MEDIA_DIR];
-	fileName += (string) meta[META_SERVER_FILE_NAME];
-	FINEST("fileName: %s", STR(fileName));
+bool InNetRTMPStream::Record(BaseOutFileStream *pOutStream) {
 
-	//2. Delete the old file
-	if (append) {
-		WARN("append not supported yet. File will be overwritten");
-	}
-	deleteFile(fileName);
-
-	//3. Create the out file
-	_pOutFileRTMPFLVStream = new OutFileRTMPFLVStream(_pProtocol,
-			_pStreamsManager, fileName);
-
-	//4. Link it
+	_pOutFileRTMPFLVStream = pOutStream;
 	return _pOutFileRTMPFLVStream->Link(this);
-}
-
-bool InNetRTMPStream::RecordMP4(Variant &meta) {
-	NYIR;
 }
 
 void InNetRTMPStream::SignalOutStreamAttached(BaseOutStream *pOutStream) {

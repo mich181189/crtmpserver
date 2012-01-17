@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (c) 2010,
  *  Gavriloaie Eugen-Andrei (shiretu@gmail.com)
  *
@@ -36,10 +36,10 @@ private:
 	IOBuffer _videoBuffer;
 	bool _inboundStreamIsRTP;
 public:
-	OutNetRTMP4TSStream(BaseProtocol *pProtocol, StreamsManager *pStreamsManager,
+	OutNetRTMP4TSStream(BaseRTMPProtocol *pProtocol, StreamsManager *pStreamsManager,
 			string name, uint32_t rtmpStreamId, uint32_t chunkSize);
 	virtual ~OutNetRTMP4TSStream();
-	
+
 	virtual void SignalAttachedToInStream();
 
 	virtual bool IsCompatibleWithType(uint64_t type);

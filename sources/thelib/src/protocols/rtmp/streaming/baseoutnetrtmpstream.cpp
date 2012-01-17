@@ -43,7 +43,7 @@
 //the number represents the percent of frames that we will drop (0-100)
 //#define SIMULATE_DROPPING_FRAMES 40
 
-BaseOutNetRTMPStream::BaseOutNetRTMPStream(BaseProtocol *pProtocol,
+BaseOutNetRTMPStream::BaseOutNetRTMPStream(BaseRTMPProtocol *pProtocol,
 		StreamsManager *pStreamsManager, uint64_t type, string name, uint32_t rtmpStreamId,
 		uint32_t chunkSize)
 : BaseOutNetStream(pProtocol, pStreamsManager, type, name) {
@@ -82,7 +82,7 @@ BaseOutNetRTMPStream::BaseOutNetRTMPStream(BaseProtocol *pProtocol,
 	InternalReset();
 }
 
-BaseOutNetRTMPStream *BaseOutNetRTMPStream::GetInstance(BaseProtocol *pProtocol,
+BaseOutNetRTMPStream *BaseOutNetRTMPStream::GetInstance(BaseRTMPProtocol *pProtocol,
 		StreamsManager *pStreamsManager,
 		string name, uint32_t rtmpStreamId,
 		uint32_t chunkSize,
@@ -789,7 +789,7 @@ bool BaseOutNetRTMPStream::ChunkAndSend(uint8_t *pData, uint32_t length,
 	}
 
 	if (leftBytesToSend == 0) {
-		assert(channel.lastOutProcBytes == H_ML(header));
+		o_assert(channel.lastOutProcBytes == H_ML(header));
 		channel.lastOutProcBytes = 0;
 	}
 
