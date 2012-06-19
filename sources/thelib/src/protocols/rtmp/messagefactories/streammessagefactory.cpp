@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (c) 2010,
  *  Gavriloaie Eugen-Andrei (shiretu@gmail.com)
  *
@@ -102,6 +102,14 @@ Variant StreamMessageFactory::GetInvokeFCSubscribe(string streamName) {
 			RM_INVOKE_FUNCTION_FCSUBSCRIBE, FCSubscribe);
 }
 
+Variant StreamMessageFactory::GetInvokeFCPublish(string streamName) {
+	Variant FCPublish;
+	FCPublish.PushToArray(Variant());
+	FCPublish.PushToArray(streamName);
+	return GenericMessageFactory::GetInvoke(3, 0, 0, false, 1,
+			RM_INVOKE_FUNCTION_FCPUBLISH, FCPublish);
+}
+
 Variant StreamMessageFactory::GetInvokeCreateStreamResult(Variant &request,
 		double createdStreamId) {
 	return GetInvokeCreateStreamResult(VH_CI(request), VH_SI(request),
@@ -149,6 +157,19 @@ Variant StreamMessageFactory::GetInvokeOnFCPublish(uint32_t channelId,
 
 	return GenericMessageFactory::GetInvoke(channelId, streamId,
 			timeStamp, isAbsolute, requestId, "onFCPublish", params);
+}
+
+Variant StreamMessageFactory::GetInvokeOnFCSubscribe(uint32_t channelId,
+		uint32_t streamId, double timeStamp, bool isAbsolute,
+		double requestId, string code, string description) {
+	Variant params;
+
+	params[(uint32_t) 0] = Variant();
+	params[(uint32_t) 1][RM_INVOKE_PARAMS_ONSTATUS_CODE] = code;
+	params[(uint32_t) 1][RM_INVOKE_PARAMS_ONSTATUS_DESCRIPTION] = description;
+
+	return GenericMessageFactory::GetInvoke(channelId, streamId,
+			timeStamp, isAbsolute, requestId, "onFCSubscribe", params);
 }
 
 Variant StreamMessageFactory::GetInvokeOnStatusStreamPublishBadName(Variant &request,

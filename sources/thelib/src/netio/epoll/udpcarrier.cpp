@@ -139,7 +139,7 @@ UDPCarrier* UDPCarrier::Create(string bindIp, uint16_t bindPort,
 	}
 
 	//2. fd options
-	if (!setFdOptions(sock)) {
+	if (!setFdOptions(sock, true)) {
 		FATAL("Unable to set fd options");
 		CLOSE_SOCKET(sock);
 		return NULL;
@@ -158,7 +158,7 @@ UDPCarrier* UDPCarrier::Create(string bindIp, uint16_t bindPort,
 	memset(&bindAddress, 0, sizeof (bindAddress));
 	if (bindIp != "") {
 		bindAddress.sin_family = PF_INET;
-		bindAddress.sin_addr.s_addr = inet_addr(bindIp.c_str());
+		bindAddress.sin_addr.s_addr = inet_addr(STR(bindIp));
 		bindAddress.sin_port = EHTONS(bindPort); //----MARKED-SHORT----
 		if (bindAddress.sin_addr.s_addr == INADDR_NONE) {
 			FATAL("Unable to bind on address %s:%hu", STR(bindIp), bindPort);
@@ -168,6 +168,13 @@ UDPCarrier* UDPCarrier::Create(string bindIp, uint16_t bindPort,
 		uint32_t testVal = EHTONL(bindAddress.sin_addr.s_addr);
 		if ((testVal > 0xe0000000) && (testVal < 0xefffffff)) {
 			INFO("Subscribe to multicast %s:%"PRIu16, STR(bindIp), bindPort);
+			int activateBroadcast = 1;
+			if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, &activateBroadcast,
+					sizeof (activateBroadcast)) != 0) {
+				int err = errno;
+				FATAL("Unable to activate SO_BROADCAST on the socket: %d", err);
+				return NULL;
+			}
 			if (ttl <= 255) {
 				if (!setFdMulticastTTL(sock, (uint8_t) ttl)) {
 					FATAL("Unable to set ttl");
@@ -193,7 +200,7 @@ UDPCarrier* UDPCarrier::Create(string bindIp, uint16_t bindPort,
 		}
 		if ((testVal > 0xe0000000) && (testVal < 0xefffffff)) {
 			struct ip_mreq group;
-			group.imr_multiaddr.s_addr = inet_addr(bindIp.c_str());
+			group.imr_multiaddr.s_addr = inet_addr(STR(bindIp));
 			group.imr_interface.s_addr = INADDR_ANY;
 			if (setsockopt(sock, IPPROTO_IP, IP_ADD_MEMBERSHIP, (char *) &group, sizeof (group)) < 0) {
 				FATAL("Adding multicast group error");

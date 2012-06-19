@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (c) 2010,
  *  Gavriloaie Eugen-Andrei (shiretu@gmail.com)
  *
@@ -112,7 +112,7 @@ public:
 			return 0;
 		}
 
-		if (!setFdOptions(fd)) {
+		if (!setFdOptions(fd, false)) {
 			CLOSE_SOCKET(fd);
 			T::SignalProtocolCreated(NULL, customParameters);
 			FATAL("Unable to set socket options");
@@ -135,7 +135,7 @@ public:
 		sockaddr_in address;
 
 		address.sin_family = PF_INET;
-		address.sin_addr.s_addr = inet_addr(_ip.c_str());
+		address.sin_addr.s_addr = inet_addr(STR(_ip));
 		if (address.sin_addr.s_addr == INADDR_NONE) {
 			FATAL("Unable to translate string %s to a valid IP address", STR(_ip));
 			return 0;

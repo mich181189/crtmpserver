@@ -126,6 +126,7 @@ public:
 
 	Variant(const char *pValue);
 	Variant(const string &value);
+	Variant(const uint8_t *pValue, uint32_t len);
 
 	virtual ~Variant();
 
@@ -165,15 +166,18 @@ public:
 
 	Variant & operator[](const string &key);
 	Variant & operator[](const char *key);
-	Variant & operator[](const double &key);
 	Variant & operator[](const uint32_t &key);
 	Variant & operator[](Variant &key);
 	Variant & GetValue(string key, bool caseSensitive);
 
-	bool operator==(Variant variant);
-	bool operator!=(Variant variant);
-	bool operator==(VariantType type);
-	bool operator!=(VariantType type);
+	bool operator==(const Variant &value) const;
+	bool operator!=(const Variant &value) const;
+	bool operator==(const char *pValue) const;
+	bool operator!=(const char *pValue) const;
+	bool operator==(const string &value) const;
+	bool operator!=(const string &value) const;
+	bool operator==(const VariantType value) const;
+	bool operator!=(const VariantType value) const;
 
 	string GetTypeName();
 	void SetTypeName(string name);

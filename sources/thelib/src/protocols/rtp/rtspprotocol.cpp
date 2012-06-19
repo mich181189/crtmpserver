@@ -76,6 +76,7 @@ RTSPProtocol::RTSPProtocol()
 	_pInboundConnectivity = NULL;
 	_keepAliveTimerId = 0;
 	_pOutStream = NULL;
+	_enableTearDown = false;
 }
 
 RTSPProtocol::~RTSPProtocol() {
@@ -143,6 +144,20 @@ void RTSPProtocol::GetStats(Variant &info, uint32_t namespaceId) {
 	}
 }
 
+void RTSPProtocol::EnqueueForDelete() {
+	if (!_enableTearDown) {
+		BaseProtocol::EnqueueForDelete();
+		return;
+	}
+	_enableTearDown = false;
+	Variant &params = GetCustomParameters();
+	Variant &variantUri = params["uri"];
+	string uri = (string) variantUri["fullUri"];
+	PushRequestFirstLine(RTSP_METHOD_TEARDOWN, uri, RTSP_VERSION_1_0);
+	SendRequestMessage();
+	GracefullyEnqueueForDelete();
+}
+
 string RTSPProtocol::GetSessionId() {
 	return _sessionId;
 }
@@ -188,6 +203,10 @@ bool RTSPProtocol::EnableKeepAlive(uint32_t period, string keepAliveURI) {
 	if (_keepAliveURI == "")
 		_keepAliveURI = "*";
 	return pTimer->EnqueueForTimeEvent(period);
+}
+
+void RTSPProtocol::EnableTearDown() {
+	_enableTearDown = true;
 }
 
 bool RTSPProtocol::SendKeepAliveOptions() {
@@ -372,14 +391,14 @@ OutboundConnectivity * RTSPProtocol::GetOutboundConnectivity(
 		_pOutboundConnectivity = new OutboundConnectivity(forceTcp, this);
 		if (!_pOutboundConnectivity->Initialize()) {
 			FATAL("Unable to initialize outbound connectivity");
-			return false;
+			return NULL;
 		}
 		pOutStream->SetConnectivity(_pOutboundConnectivity);
 		_pOutboundConnectivity->SetOutStream(pOutStream);
 
 		if (!pInNetStream->Link(pOutStream)) {
 			FATAL("Unable to link streams");
-			return false;
+			return NULL;
 		}
 	}
 
@@ -694,13 +713,17 @@ bool RTSPProtocol::ParseFirstLine(string &line) {
 }
 
 bool RTSPProtocol::HandleRTSPMessage(IOBuffer &buffer) {
+	if (_pProtocolHandler == NULL) {
+		FATAL("RTSP protocol decoupled from application");
+		return false;
+	}
 	//1. Get the content
 	if (_contentLength > 0) {
 		if (_contentLength > 1024 * 1024) {
 			FATAL("Bogus content length: %u", _contentLength);
 			return false;
 		}
-		uint32_t chunkLength = _contentLength - _inboundContent.size();
+		uint32_t chunkLength = _contentLength - (uint32_t) _inboundContent.size();
 		chunkLength = GETAVAILABLEBYTESCOUNT(buffer) < chunkLength ?
 				GETAVAILABLEBYTESCOUNT(buffer) : chunkLength;
 		_inboundContent += string((char *) GETIBPOINTER(buffer), chunkLength);

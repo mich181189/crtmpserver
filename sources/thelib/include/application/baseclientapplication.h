@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (c) 2010,
  *  Gavriloaie Eugen-Andrei (shiretu@gmail.com)
  *
@@ -29,6 +29,9 @@ class BaseProtocol;
 class BaseAppProtocolHandler;
 class BaseStream;
 class IOHandler;
+#ifdef HAS_VOD_MANAGER
+class BaseVODManager;
+#endif /* HAS_VOD_MANAGER */
 
 /*!
 	@brief
@@ -42,6 +45,11 @@ private:
 	map<uint64_t, BaseAppProtocolHandler *> _protocolsHandlers;
 	StreamsManager _streamsManager;
 	bool _allowDuplicateInboundNetworkStreams;
+	map<string, string> _streamAliases;
+	bool _hasStreamAliases;
+#ifdef HAS_VOD_MANAGER
+	BaseVODManager *_pVODManager;
+#endif /* HAS_VOD_MANAGER */
 protected:
 	Variant _configuration;
 	bool _isDefault;
@@ -75,6 +83,9 @@ public:
 	 */
 	bool IsDefault();
 	StreamsManager *GetStreamsManager();
+#ifdef HAS_VOD_MANAGER
+	BaseVODManager *GetVODManager();
+#endif /* HAS_VOD_MANAGER */
 
 	virtual bool Initialize();
 
@@ -140,13 +151,13 @@ public:
 	virtual void UnRegisterProtocol(BaseProtocol *pProtocol);
 
 	/*!
-		@brief Displays the registered stream's ID, type, and name in the logs 
+		@brief Displays the registered stream's ID, type, and name in the logs
 		@param pStream
 	 */
 	virtual void SignalStreamRegistered(BaseStream *pStream);
 
 	/*!
-		@brief Displays the unregistered stream's ID, type, and name in the logs 
+		@brief Displays the unregistered stream's ID, type, and name in the logs
 		@param pStream
 	 */
 	virtual void SignalStreamUnRegistered(BaseStream *pStream);
@@ -156,11 +167,18 @@ public:
 	virtual bool PushLocalStream(Variant streamConfig);
 	bool ParseAuthentication();
 
+	virtual void SignalUnLinkingStreams(BaseInStream *pInStream, BaseOutStream *pOutStream);
+
 	/*!
 		@brief Deletes all active protocols and IOHandlers bound to the application.
 		@param pApplication
 	 */
 	static void Shutdown(BaseClientApplication *pApplication);
+
+	string GetStreamNameByAlias(string &streamName, bool remove = true);
+	void SetStreamAlias(string &streamName, string &streamAlias);
+	void RemoveStreamAlias(string &streamAlias);
+	map<string, string> & GetAllStreamAliases();
 private:
 	string GetServiceInfo(IOHandler *pIOHander);
 };

@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (c) 2010,
  *  Gavriloaie Eugen-Andrei (shiretu@gmail.com)
  *
@@ -55,6 +55,7 @@
 #define M_USRCTRL_TYPE(x)     ((x)[RM_USRCTRL][RM_USRCTRL_TYPE])
 #define M_USRCTRL_TYPE_STRING(x)     ((x)[RM_USRCTRL][RM_USRCTRL_TYPE_STRING])
 #define M_USRCTRL_STREAMID(x) ((x)[RM_USRCTRL][RM_USRCTRL_STREAMID])
+#define M_USRCTRL_BUFFERLEN(x) ((x)[RM_USRCTRL][RM_USRCTRL_BUFFLEN])
 #define M_USRCTRL_PING(x) ((x)[RM_USRCTRL][RM_USRCTRL_PING])
 #define M_USRCTRL_PONG(x) ((x)[RM_USRCTRL][RM_USRCTRL_PONG])
 
@@ -85,7 +86,7 @@ public:
 	//invokes and notify
 	static Variant GetInvoke(uint32_t channelId, uint32_t streamId,
 			double timeStamp, bool isAbsolute, double requestId,
-			string functionName, Variant &parameters);
+			string functionName, Variant &parameters, bool insertNull = false);
 	static Variant GetNotify(uint32_t channelId,
 			uint32_t streamId, double timeStamp, bool isAbsolute,
 			string handlerName, Variant params);

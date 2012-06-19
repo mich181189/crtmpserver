@@ -90,7 +90,7 @@ uint64_t __vRoll = 0;
 
 #define DROP_PACKET \
 do { \
-	/*WARN("Video packet dropped!!!");*/ \
+	/*WARN("Video packet dropped!");*/ \
 	if(!isAudio) { \
 		_videoBucket.IgnoreAll(); \
 	} else { \
@@ -270,7 +270,9 @@ void InNetTSStream::ReadyForSend() {
 bool InNetTSStream::IsCompatibleWithType(uint64_t type) {
 	return TAG_KIND_OF(type, ST_OUT_NET_RTMP_4_TS)
 			|| (type == ST_OUT_NET_RTP)
-			|| (type == ST_OUT_FILE_HLS);
+            || (type == ST_OUT_FILE_HLS)
+			|| (type == ST_OUT_FILE_HDS)
+			|| (type == ST_OUT_FILE_TS);
 }
 
 void InNetTSStream::SignalOutStreamAttached(BaseOutStream *pOutStream) {
@@ -431,7 +433,7 @@ bool InNetTSStream::HandleVideoData() {
 		}
 		found = false;
 		if (pNalStart != NULL) {
-			if (!ProcessNal(pNalStart, pNalEnd - pNalStart, _ptsTimeVideo)) {
+			if (!ProcessNal(pNalStart, (int32_t) (pNalEnd - pNalStart), _ptsTimeVideo)) {
 				FATAL("Unable to process NAL");
 				return false;
 			}
@@ -439,7 +441,7 @@ bool InNetTSStream::HandleVideoData() {
 		pNalStart = pNalEnd + markerSize;
 	}
 	if (pNalStart != NULL) {
-		int32_t lastLength = length - (pNalStart - pBuffer);
+		int32_t lastLength = (int32_t) (length - (pNalStart - pBuffer));
 		if (!ProcessNal(pNalStart, lastLength, _ptsTimeVideo)) {
 			FATAL("Unable to process NAL");
 			return false;

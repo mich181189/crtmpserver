@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (c) 2010,
  *  Gavriloaie Eugen-Andrei (shiretu@gmail.com)
  *
@@ -21,6 +21,7 @@
 #include "streaming/baseoutstream.h"
 #include "streaming/streamstypes.h"
 #include "streaming/baseinstream.h"
+#include "streaming/streamsmanager.h"
 
 BaseOutStream::BaseOutStream(BaseProtocol *pProtocol,
 		StreamsManager *pStreamsManager, uint64_t type, string name)
@@ -79,15 +80,14 @@ bool BaseOutStream::Link(BaseInStream *pInStream, bool reverseLink) {
 }
 
 bool BaseOutStream::UnLink(bool reverseUnLink) {
+	_pStreamsManager->SignalUnLinkingStreams(_pInStream, this);
 	if (_pInStream == NULL) {
 		WARN("BaseOutStream::UnLink: This stream is not linked");
 		return true;
 	}
 	if (reverseUnLink) {
 		if (!_pInStream->UnLink(this, false)) {
-			FATAL("BaseOutStream::UnLink: Unable to reverse unLink");
-			//TODO: what are we going to do here???
-			NYIA;
+			WARN("BaseOutStream::UnLink: Unable to reverse unLink");
 		}
 	}
 	_pInStream = NULL;
@@ -150,18 +150,29 @@ bool BaseOutStream::Resume() {
 }
 
 bool BaseOutStream::Seek(double absoluteTimestamp) {
-	if (!SignalSeek(absoluteTimestamp)) {
-		FATAL("Unable to signal seek");
-		return false;
-	}
-
+#ifdef HAS_VOD_MANAGER
 	if (_pInStream != NULL) {
 		if (!_pInStream->SignalSeek(absoluteTimestamp)) {
 			FATAL("Unable to signal seek");
 			return false;
 		}
 	}
-
+	if (!SignalSeek(absoluteTimestamp)) {
+		FATAL("Unable to signal seek");
+		return false;
+	}
+#else /* HAS_VOD_MANAGER */
+	if (!SignalSeek(absoluteTimestamp)) {
+		FATAL("Unable to signal seek");
+		return false;
+	}
+	if (_pInStream != NULL) {
+		if (!_pInStream->SignalSeek(absoluteTimestamp)) {
+			FATAL("Unable to signal seek");
+			return false;
+		}
+	}
+#endif /* HAS_VOD_MANAGER */
 	return true;
 }
 

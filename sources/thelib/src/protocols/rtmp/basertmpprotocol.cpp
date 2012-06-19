@@ -32,6 +32,7 @@
 #include "protocols/rtmp/streaming/rtmpstream.h"
 #include "streaming/streamstypes.h"
 #include "protocols/rtmp/monitorrtmpprotocol.h"
+#include "protocols/rtmp/sharedobjects/so.h"
 
 #define MAX_RTMP_OUTPUT_BUFFER 1024*256
 
@@ -113,6 +114,147 @@ BaseRTMPProtocol::~BaseRTMPProtocol() {
 		_pMonitor = NULL;
 	}
 #endif /* ENFORCE_RTMP_OUTPUT_CHECKS */
+
+	FOR_MAP(_sos, string, ClientSO *, i) {
+		delete MAP_VAL(i);
+	}
+	_sos.clear();
+}
+
+ClientSO *BaseRTMPProtocol::GetSO(string &name) {
+	map<string, ClientSO *>::iterator i = _sos.find(name);
+	if (i == _sos.end())
+		return NULL;
+	return MAP_VAL(i);
+}
+
+bool BaseRTMPProtocol::CreateSO(string &name) {
+	if (GetType() != PT_OUTBOUND_RTMP) {
+		FATAL("Incorrect RTMP protocol type for opening SO");
+		return false;
+	}
+	if (GetSO(name) != NULL) {
+		FATAL("So already present");
+		return false;
+	}
+	_sos[name] = new ClientSO();
+	_sos[name]->name(name);
+	_sos[name]->version(1);
+	return true;
+}
+
+void BaseRTMPProtocol::SignalBeginSOProcess(string &name) {
+
+}
+
+void BaseRTMPProtocol::SignalEndSOProcess(string &name, uint32_t versionNumber) {
+	ClientSO *pSO = NULL;
+	if (!MAP_HAS1(_sos, name)) {
+		//FATAL("Client SO %s not found", STR(name));
+		return;
+	}
+	pSO = _sos[name];
+	pSO->version(versionNumber);
+	if (pSO->changedProperties().MapSize() == 0)
+		return;
+	_pProtocolHandler->SignalClientSOUpdated(this, pSO);
+	pSO->changedProperties().RemoveAllKeys();
+	return;
+}
+
+bool BaseRTMPProtocol::ClientSOSend(string &name, Variant &parameters) {
+	ClientSO *pSO = NULL;
+	if (!MAP_HAS1(_sos, name)) {
+		FATAL("Client SO %s not found", STR(name));
+		return false;
+	}
+	pSO = _sos[name];
+	Variant message = SOMessageFactory::GetSharedObject(3, 0, 0, false, name,
+			pSO->version(), pSO->persistent());
+	SOMessageFactory::AddSOPrimitiveSend(message, parameters);
+	return SendMessage(message);
+}
+
+bool BaseRTMPProtocol::ClientSOSetProperty(string &soName, string &propName,
+		Variant &propValue) {
+	ClientSO *pSO = NULL;
+	if (!MAP_HAS1(_sos, soName)) {
+		FATAL("Client SO %s not found", STR(soName));
+		return false;
+	}
+	pSO = _sos[soName];
+	Variant message = SOMessageFactory::GetSharedObject(3, 0, 0, false, soName,
+			pSO->version(), pSO->persistent());
+	SOMessageFactory::AddSOPrimitiveSetProperty(message, propName, propValue);
+	if (!SendMessage(message)) {
+		FATAL("Unable to set property value");
+		return false;
+	}
+	pSO->changedProperties().PushToArray(propName);
+	if ((propValue == V_NULL) || (propValue == V_UNDEFINED))
+		pSO->properties().RemoveKey(propName);
+	else
+		pSO->properties()[propName] = propValue;
+	_pProtocolHandler->SignalClientSOUpdated(this, pSO);
+	pSO->changedProperties().RemoveAllKeys();
+	return true;
+}
+
+bool BaseRTMPProtocol::HandleSOPrimitive(string &name, Variant &primitive) {
+	ClientSO *pSO = NULL;
+	if (!MAP_HAS1(_sos, name)) {
+		FATAL("Client SO %s not found", STR(name));
+		return false;
+	}
+	pSO = _sos[name];
+	switch ((uint8_t) primitive[RM_SHAREDOBJECTPRIMITIVE_TYPE]) {
+		case SOT_CS_UPDATE_FIELD:
+		case SOT_SC_INITIAL_DATA:
+		{
+
+			FOR_MAP(primitive[RM_SHAREDOBJECTPRIMITIVE_PAYLOAD], string, Variant, i) {
+				pSO->properties()[MAP_KEY(i)] = MAP_VAL(i);
+				pSO->changedProperties().PushToArray(MAP_KEY(i));
+			}
+			if ((uint8_t) primitive[RM_SHAREDOBJECTPRIMITIVE_TYPE] == SOT_SC_INITIAL_DATA) {
+				_pProtocolHandler->SignalClientSOConnected(this, pSO);
+			}
+			return true;
+		}
+		case SOT_SC_CLEAR_DATA:
+		{
+
+			FOR_MAP(pSO->properties(), string, Variant, i) {
+				pSO->changedProperties().PushToArray(MAP_KEY(i));
+			}
+			pSO->properties().RemoveAllKeys();
+			return true;
+		}
+		case SOT_SC_DELETE_FIELD:
+		{
+
+			FOR_MAP(primitive[RM_SHAREDOBJECTPRIMITIVE_PAYLOAD], string, Variant, i) {
+				pSO->properties().RemoveKey((string) MAP_VAL(i));
+				pSO->changedProperties().PushToArray(MAP_VAL(i));
+			}
+			return true;
+		}
+		case SOT_BW_SEND_MESSAGE:
+		{
+			_pProtocolHandler->SignalClientSOSend(this, pSO,
+					primitive[RM_SHAREDOBJECTPRIMITIVE_PAYLOAD]);
+			return true;
+		}
+		case SOT_CS_UPDATE_FIELD_ACK:
+		{
+			return true;
+		}
+		default:
+		{
+			FATAL("Primitive not supported\n%s", STR(primitive.ToString()));
+			return false;
+		}
+	}
 }
 
 bool BaseRTMPProtocol::Initialize(Variant &parameters) {
@@ -345,8 +487,8 @@ void BaseRTMPProtocol::TrySetOutboundChunkSize(uint32_t chunkSize) {
 
 BaseStream * BaseRTMPProtocol::GetRTMPStream(uint32_t rtmpStreamId) {
 	if (rtmpStreamId == 0 || rtmpStreamId >= MAX_STREAMS_COUNT) {
-		FATAL("Invalid stream id: %u", rtmpStreamId);
-		return false;
+		//WARN("Invalid stream id: %"PRIu32, rtmpStreamId);
+		return NULL;
 	}
 	return _streams[rtmpStreamId];
 }
@@ -362,6 +504,8 @@ bool BaseRTMPProtocol::CloseStream(uint32_t streamId, bool createNeutralStream) 
 		WARN("Try to close a NULL stream");
 		return true;
 	}
+
+	uint32_t clientSideBuffer = 0;
 
 	if (TAG_KIND_OF(_streams[streamId]->GetType(), ST_OUT_NET_RTMP)) {
 		//2. Remove it from signaled streams
@@ -379,17 +523,22 @@ bool BaseRTMPProtocol::CloseStream(uint32_t streamId, bool createNeutralStream) 
 		//is a file, close that as well
 		BaseOutNetRTMPStream *pBaseOutNetRTMPStream = (BaseOutNetRTMPStream *) _streams[streamId];
 		if (pBaseOutNetRTMPStream->GetInStream() != NULL) {
-			if (TAG_KIND_OF(pBaseOutNetRTMPStream->GetInStream()->GetType(), ST_IN_FILE_RTMP))
+			if (TAG_KIND_OF(pBaseOutNetRTMPStream->GetInStream()->GetType(), ST_IN_FILE_RTMP)) {
+				clientSideBuffer = ((InFileRTMPStream *) pBaseOutNetRTMPStream->GetInStream())->GetClientSideBuffer()*1000;
 				RemoveIFS((InFileRTMPStream *) pBaseOutNetRTMPStream->GetInStream());
+			}
 		}
+	} else if (_streams[streamId]->GetType() == ST_NEUTRAL_RTMP) {
+		clientSideBuffer = ((RTMPStream *) _streams[streamId])->GetClientSideBuffer();
 	}
 
 	//4. Delete the stream and replace it with a neutral one
 	delete _streams[streamId];
 	_streams[streamId] = NULL;
-	if (createNeutralStream) {
+	if ((createNeutralStream) && (GetApplication() != NULL)) {
 		_streams[streamId] = new RTMPStream(this,
 				GetApplication()->GetStreamsManager(), streamId);
+		((RTMPStream *) _streams[streamId])->SetClientSideBuffer(clientSideBuffer);
 	}
 
 	return true;
@@ -454,7 +603,9 @@ InNetRTMPStream * BaseRTMPProtocol::CreateINS(uint32_t channelId,
 }
 
 BaseOutNetRTMPStream * BaseRTMPProtocol::CreateONS(uint32_t streamId,
-		string streamName, uint64_t inStreamType) {
+		string streamName, uint64_t inStreamType, uint32_t &clientSideBuffer) {
+	clientSideBuffer = 0;
+
 	if (streamId == 0 || streamId >= MAX_STREAMS_COUNT) {
 		FATAL("Invalid stream id: %u", streamId);
 		return NULL;
@@ -470,6 +621,7 @@ BaseOutNetRTMPStream * BaseRTMPProtocol::CreateONS(uint32_t streamId,
 			return NULL;
 		}
 
+		clientSideBuffer = ((RTMPStream *) _streams[streamId])->GetClientSideBuffer();
 		delete _streams[streamId];
 		_streams[streamId] = NULL;
 	}
@@ -510,12 +662,22 @@ InFileRTMPStream * BaseRTMPProtocol::CreateIFS(Variant &metadata) {
 	bool hasTimer = true;
 	if (metadata.HasKeyChain(V_BOOL, true, 1, "hasTimer"))
 		hasTimer = (bool)metadata["hasTimer"];
+#ifdef HAS_VOD_MANAGER
+	if (!pRTMPInFileStream->Initialize(metadata,
+			(int32_t) metadata[CONF_APPLICATION_CLIENTSIDEBUFFER],
+			hasTimer)) {
+		FATAL("Unable to initialize file inbound stream");
+		delete pRTMPInFileStream;
+		return NULL;
+	}
+#else /* HAS_VOD_MANAGER */
 	if (!pRTMPInFileStream->Initialize(
 			(int32_t) metadata[CONF_APPLICATION_CLIENTSIDEBUFFER], hasTimer)) {
 		FATAL("Unable to initialize file inbound stream");
 		delete pRTMPInFileStream;
 		return NULL;
 	}
+#endif /* HAS_VOD_MANAGER */
 	_inFileStreams[pRTMPInFileStream] = pRTMPInFileStream;
 	return pRTMPInFileStream;
 }
@@ -807,7 +969,7 @@ bool BaseRTMPProtocol::ProcessBytes(IOBuffer &buffer) {
 						_rxInvokes++;
 
 						if (GETAVAILABLEBYTESCOUNT(channel.inputData) != 0) {
-							FATAL("Invalid message!!! We have leftovers: %u bytes",
+							FATAL("Invalid message! We have leftovers: %u bytes",
 									GETAVAILABLEBYTESCOUNT(channel.inputData));
 							return false;
 						}

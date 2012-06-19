@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (c) 2010,
  *  Gavriloaie Eugen-Andrei (shiretu@gmail.com)
  *
@@ -42,6 +42,7 @@ public:
 	static Variant GetInvokePlay(uint32_t channelId, uint32_t streamId,
 			string streamName, double start, double length);
 	static Variant GetInvokeFCSubscribe(string streamName);
+	static Variant GetInvokeFCPublish(string streamName);
 
 	//management responses
 	static Variant GetInvokeCreateStreamResult(Variant &request,
@@ -52,6 +53,9 @@ public:
 			uint32_t streamId, uint32_t requestId, double releasedStreamId);
 	static Variant GetInvokeReleaseStreamErrorNotFound(Variant &request);
 	static Variant GetInvokeOnFCPublish(uint32_t channelId,
+			uint32_t streamId, double timeStamp, bool isAbsolute,
+			double requestId, string code, string description);
+	static Variant GetInvokeOnFCSubscribe(uint32_t channelId,
 			uint32_t streamId, double timeStamp, bool isAbsolute,
 			double requestId, string code, string description);
 

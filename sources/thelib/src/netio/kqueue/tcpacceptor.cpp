@@ -33,7 +33,7 @@ TCPAcceptor::TCPAcceptor(string ipAddress, uint16_t port, Variant parameters,
 	memset(&_address, 0, sizeof (sockaddr_in));
 
 	_address.sin_family = PF_INET;
-	_address.sin_addr.s_addr = inet_addr(ipAddress.c_str());
+	_address.sin_addr.s_addr = inet_addr(STR(ipAddress));
 	o_assert(_address.sin_addr.s_addr != INADDR_NONE);
 	_address.sin_port = EHTONS(port); //----MARKED-SHORT----
 
@@ -57,7 +57,7 @@ bool TCPAcceptor::Bind() {
 		return false;
 	}
 
-	if (!setFdOptions(_inboundFd)) {
+	if (!setFdOptions(_inboundFd, false)) {
 		FATAL("Unable to set socket options");
 		return false;
 	}
@@ -147,7 +147,7 @@ bool TCPAcceptor::Accept() {
 			STR(_ipAddress),
 			_port);
 
-	if (!setFdOptions(fd)) {
+	if (!setFdOptions(fd, false)) {
 		FATAL("Unable to set socket options");
 		CLOSE_SOCKET(fd);
 		return false;
@@ -191,9 +191,10 @@ bool TCPAcceptor::Drop() {
 	//1. Accept the connection
 	int32_t fd = accept(_inboundFd, &address, &len);
 	if (fd < 0) {
-		uint32_t err = LASTSOCKETERROR;
-		WARN("Accept failed. Error code was: %"PRIu32, err);
-		return true;
+		uint32_t err = errno;
+		if (err != EWOULDBLOCK)
+			WARN("Accept failed. Error code was: %"PRIu32, err);
+		return false;
 	}
 
 	//2. Drop it now

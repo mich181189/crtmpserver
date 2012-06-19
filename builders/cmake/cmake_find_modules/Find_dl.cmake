@@ -1,8 +1,9 @@
 MESSAGE(STATUS "Looking for dl")
-FIND_PATH(DL_INCLUDE_PATH 
+FIND_PATH(DL_INCLUDE_PATH
 	NAMES
 		dlfcn.h
 	PATHS
+		${TOOLCHAIN_HEADER_PATH}
 		/usr/include
 		/usr/local/include
 		/sw/include
@@ -15,16 +16,25 @@ FIND_LIBRARY(DL_LIBRARY_PATH
 	NAMES
 		dl
 	PATHS
+		${TOOLCHAIN_LIBRARY_PATH}
+		/lib64
 		/usr/lib64
-		/usr/lib
 		/usr/local/lib64
+		/lib/x86_64-linux-gnu
+		/usr/lib/x86_64-linux-gnu
+		/opt/local/lib64
+		/sw/lib64
+		/lib
+		/usr/lib
 		/usr/local/lib
-		/sw/lib
+		/lib/i386-linux-gnu
+		/usr/lib/i386-linux-gnu
 		/opt/local/lib
-		/lib/i386-linux-gnu/
+		/sw/lib
 		NO_DEFAULT_PATH)
 
-MESSAGE("DL_LIBRARY_PATH: ${DL_LIBRARY_PATH}")
+MESSAGE(STATUS "DL_INCLUDE_PATH: ${DL_INCLUDE_PATH}")
+MESSAGE(STATUS "DL_LIBRARY_PATH: ${DL_LIBRARY_PATH}")
 
 IF(DL_INCLUDE_PATH)
 	SET(DL_FOUND 1 CACHE STRING "Set to 1 if dl is found, 0 otherwise")

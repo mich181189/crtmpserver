@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (c) 2010,
  *  Gavriloaie Eugen-Andrei (shiretu@gmail.com)
  *
@@ -26,6 +26,7 @@
 #include "streaming/basestream.h"
 #include "application/clientapplicationmanager.h"
 #include "streaming/streamstypes.h"
+#include "vod/basevodmanager.h"
 
 uint32_t BaseClientApplication::_idGenerator = 0;
 
@@ -48,10 +49,21 @@ BaseClientApplication::BaseClientApplication(Variant &configuration)
 			CONF_APPLICATION_ALLOW_DUPLICATE_INBOUND_NETWORK_STREAMS))
 		_allowDuplicateInboundNetworkStreams =
 			(bool)configuration[CONF_APPLICATION_ALLOW_DUPLICATE_INBOUND_NETWORK_STREAMS];
+	_hasStreamAliases = false;
+	if (configuration.HasKeyChain(V_BOOL, false, 1, CONF_APPLICATION_HAS_STREAM_ALIASES))
+		_hasStreamAliases = (bool)configuration[CONF_APPLICATION_HAS_STREAM_ALIASES];
+#ifdef HAS_VOD_MANAGER
+	_pVODManager = new BaseVODManager(this, configuration);
+#endif /* HAS_VOD_MANAGER */
 }
 
 BaseClientApplication::~BaseClientApplication() {
-
+#ifdef HAS_VOD_MANAGER
+	if (_pVODManager != NULL) {
+		delete _pVODManager;
+	}
+	_pVODManager = NULL;
+#endif /* HAS_VOD_MANAGER */
 }
 
 uint32_t BaseClientApplication::GetId() {
@@ -77,8 +89,18 @@ bool BaseClientApplication::IsDefault() {
 StreamsManager *BaseClientApplication::GetStreamsManager() {
 	return &_streamsManager;
 }
+#ifdef HAS_VOD_MANAGER
+
+BaseVODManager *BaseClientApplication::GetVODManager() {
+	return _pVODManager;
+}
+#endif /* HAS_VOD_MANAGER */
 
 bool BaseClientApplication::Initialize() {
+#ifdef HAS_VOD_MANAGER
+	if (_pVODManager != NULL)
+		return _pVODManager->Initialize();
+#endif /* HAS_VOD_MANAGER */
 	return true;
 }
 
@@ -150,6 +172,8 @@ bool BaseClientApplication::StreamNameAvailable(string streamName,
 		BaseProtocol *pProtocol) {
 	if (_allowDuplicateInboundNetworkStreams)
 		return true;
+	if (MAP_HAS1(_streamAliases, streamName))
+		return false;
 	return _streamsManager.StreamNameAvailable(streamName);
 }
 
@@ -256,7 +280,7 @@ bool BaseClientApplication::PullExternalStreams() {
 	FOR_MAP(_configuration["externalStreams"], string, Variant, i) {
 		Variant &temp = MAP_VAL(i);
 		if ((!temp.HasKeyChain(V_STRING, false, 1, "localStreamName"))
-				|| ((string) temp.GetValue("localStreamName", false) == "")) {
+				|| (temp.GetValue("localStreamName", false) == "")) {
 			WARN("External stream configuration is doesn't have localStreamName property invalid:\n%s",
 					STR(temp.ToString()));
 			continue;
@@ -395,6 +419,11 @@ bool BaseClientApplication::ParseAuthentication() {
 	return true;
 }
 
+void BaseClientApplication::SignalUnLinkingStreams(BaseInStream *pInStream,
+		BaseOutStream *pOutStream) {
+
+}
+
 void BaseClientApplication::Shutdown(BaseClientApplication *pApplication) {
 	//1. Get the list of all active protocols
 	map<uint32_t, BaseProtocol *> protocols = ProtocolManager::GetActiveProtocols();
@@ -440,6 +469,43 @@ void BaseClientApplication::Shutdown(BaseClientApplication *pApplication) {
 
 	//5. Delete it
 	delete pApplication;
+}
+
+string BaseClientApplication::GetStreamNameByAlias(string &streamName, bool remove) {
+	string result = "";
+
+	map<string, string>::iterator i = _streamAliases.find(streamName);
+
+	if (i != _streamAliases.end()) {
+		result = MAP_VAL(i);
+		if (remove) {
+			_streamAliases.erase(i);
+		}
+	} else {
+		if (!_hasStreamAliases) {
+			result = streamName;
+		}
+	}
+
+	if (_aliases.size() > 200) {
+		WARN("Auto flush aliases: %"PRIu32, (uint32_t) _aliases.size());
+		_aliases.clear();
+	}
+
+	return result;
+}
+
+void BaseClientApplication::SetStreamAlias(string &streamName, string &streamAlias) {
+	if (!_hasStreamAliases)
+		_streamAliases[streamAlias] = streamName;
+}
+
+void BaseClientApplication::RemoveStreamAlias(string &streamAlias) {
+	_streamAliases.erase(streamAlias);
+}
+
+map<string, string> & BaseClientApplication::GetAllStreamAliases() {
+	return _streamAliases;
 }
 
 string BaseClientApplication::GetServiceInfo(IOHandler *pIOHandler) {

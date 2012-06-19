@@ -30,7 +30,7 @@ configuration=
 			type="file",
 			level=6,
 			-- the file where the log messages are going to land
-			fileName="/tmp/crtmpserver.log"
+			fileName="/tmp/crtmpserver.log",
 			fileHistorySize=10,
 			fileLength=1024*1024,
 			singleLine=true
@@ -62,7 +62,7 @@ configuration=
 			
 			-- Tells the server to validate the clien's handshake before going further. 
 			-- It is optional, defaulted to true
-			validateHandshake=true,
+			validateHandshake=false,
 			-- this is the folder from where the current application gets it's content.
 			-- It is optional. If not specified, it will be defaulted to:
 			-- <rootDirectory>/<name>/mediaFolder
@@ -161,7 +161,7 @@ configuration=
 				}
 				]]--
 			},
-			validateHandshake=true,
+			validateHandshake=false,
 			keyframeSeek=true,
 			seekGranularity=1.5, --in seconds, between 0.1 and 600
 			clientSideBuffer=12, --in seconds, between 5 and 30
@@ -202,8 +202,8 @@ configuration=
 					port=8988,
 					protocol="echoProtocol"
 				}
-			}
-			--validateHandshake=true,
+			},
+			validateHandshake=false,
 			--default=true,
 		},
 		{
@@ -223,8 +223,8 @@ configuration=
 					port=1111,
 					protocol="inboundHttpXmlVariant"
 				}
-			}
-			--validateHandshake=true,
+			},
+			validateHandshake=false,
 			--default=true,
 		},
 		{
@@ -245,8 +245,8 @@ configuration=
 					protocol="inboundJsonCli",
 					useLengthPadding=true
 				},
-			}
-			--validateHandshake=true,
+			},
+			validateHandshake=false,
 			--default=true,
 		},
 		{
@@ -270,26 +270,26 @@ configuration=
 					localStreamName="gigi",
 					emulateUserAgent="FMLE/3.0 (compatible; FMSc/1.0 http://www.rtmpd.com)"
 				}]]--,
-				{
+				--[[{
 					targetUri="rtmp://localhost/vod",
 					targetStreamType="live", -- (live, record or append)
 					emulateUserAgent="My user agent",
 					localStreamName="stream1"
-				},
+				},]]--
 			},
-			--[[externalStreams = 
+			externalStreams = 
 			{
-				{
-					uri="rtsp://82.177.67.61/axis-media/media.amp",
-					localStreamName="stream4",
-					forceTcp=false
-				},
-				{
+				--[[{
+					uri="rtsp://fms20.mediadirect.ro/live2/realitatea/realitatea",
+					localStreamName="stream1",
+					forceTcp=true
+				},]]--
+				--[[{
 					uri="rtmp://edge01.fms.dutchview.nl/botr/bunny",
 					localStreamName="stream1"
-				},
-			},]]--
-			--validateHandshake=true,
+				},]]--
+			},
+			validateHandshake=false,
 			--default=true,
 		},
 		{

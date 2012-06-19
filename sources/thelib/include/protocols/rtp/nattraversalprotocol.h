@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (c) 2010,
  *  Gavriloaie Eugen-Andrei (shiretu@gmail.com)
  *
@@ -36,7 +36,7 @@ public:
 	virtual bool SignalInputData(int32_t recvAmount);
 	virtual bool SignalInputData(IOBuffer &buffer);
 	virtual bool SignalInputData(IOBuffer &buffer, sockaddr_in *pPeerAddress);
-	
+
 	void SetOutboundAddress(sockaddr_in *pOutboundAddress);
 };
 

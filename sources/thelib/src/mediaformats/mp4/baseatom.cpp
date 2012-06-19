@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (c) 2010,
  *  Gavriloaie Eugen-Andrei (shiretu@gmail.com)
  *
@@ -164,15 +164,31 @@ bool BaseAtom::SkipBytes(uint64_t count) {
 bool BaseAtom::ReadString(string &val, uint64_t size) {
 	if (!CheckBounds(size))
 		return false;
-	char *pTemp = new char[(uint32_t)size + 1];
-	memset(pTemp, 0, (uint32_t)size + 1);
+	char *pTemp = new char[(uint32_t) size + 1];
+	memset(pTemp, 0, (uint32_t) size + 1);
 	bool result = _pDoc->GetMediaFile().ReadBuffer((uint8_t *) pTemp, size);
 	if (result)
-		val = string(pTemp, (uint32_t)size);
+		val = string(pTemp, (uint32_t) size);
 	else
 		val = "";
 	delete[] pTemp;
 	return result;
+}
+
+bool BaseAtom::ReadNullTerminatedString(string &val) {
+	val = "";
+	uint8_t c = 0;
+
+	do {
+		if (!ReadUInt8(c)) {
+			FATAL("Unable to read character");
+			return false;
+		}
+		if (c != 0)
+			val += (char) c;
+	} while (c != 0);
+
+	return true;
 }
 
 #endif /* HAS_MEDIA_MP4 */

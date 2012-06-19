@@ -34,7 +34,7 @@ InNetRTPStream::InNetRTPStream(BaseProtocol *pProtocol,
 	if (AAC.length() != 0) {
 		_capabilities.InitAudioAAC(
 				(uint8_t *) STR(AAC),
-				AAC.length());
+				(uint32_t) AAC.length());
 		_hasAudio = true;
 	}
 
@@ -42,9 +42,9 @@ InNetRTPStream::InNetRTPStream(BaseProtocol *pProtocol,
 	if ((SPS.length() != 0) && (PPS.length() != 0)) {
 		_capabilities.InitVideoH264(
 				(uint8_t *) STR(SPS),
-				SPS.length(),
+				(uint32_t) SPS.length(),
 				(uint8_t *) STR(PPS),
-				PPS.length());
+				(uint32_t) PPS.length());
 		_hasVideo = true;
 	}
 
@@ -94,8 +94,10 @@ bool InNetRTPStream::IsCompatibleWithType(uint64_t type) {
 	return (type == ST_OUT_NET_RTMP_4_TS)
 			|| (type == ST_OUT_NET_TS)
 			|| (type == ST_OUT_FILE_HLS)
+            || (type == ST_OUT_FILE_TS)
 			|| (type == ST_OUT_FILE_HDS)
-			|| (type == ST_OUT_NET_RTP);
+			|| (type == ST_OUT_NET_RTP)
+            || (type == ST_OUT_FILE_RTMP_FLV);
 }
 
 void InNetRTPStream::ReadyForSend() {
@@ -236,7 +238,7 @@ bool InNetRTPStream::FeedData(uint8_t *pData, uint32_t dataLength,
 	}
 
 	if (lastTs * 100.00 > absoluteTimestamp * 100.00) {
-		WARN("Back time on %s. ATS: %.08f LTS: %.08f; D: %.8f; isAudio: %"PRIu8,
+		WARN("Back time on %s. ATS: %.08f LTS: %.08f; D: %.8f; isAudio: %d",
 				STR(GetName()),
 				absoluteTimestamp,
 				lastTs,
@@ -467,30 +469,30 @@ void InNetRTPStream::ReportSR(uint64_t ntpMicroseconds, uint32_t rtpTimestamp,
 }
 
 void InNetRTPStream::FeedVideoCodecSetup(BaseOutStream* pOutStream) {
-//	if (!pOutStream->FeedData(
-//			_capabilities.avc._pSPS,
-//			_capabilities.avc._spsLength,
-//			0,
-//			_capabilities.avc._spsLength,
-//			_videoLastTs,
-//			false)) {
-//		FATAL("Unable to feed stream");
-//		if (pOutStream->GetProtocol() != NULL) {
-//			pOutStream->GetProtocol()->EnqueueForDelete();
-//		}
-//	}
-//	if (!pOutStream->FeedData(
-//			_capabilities.avc._pPPS,
-//			_capabilities.avc._ppsLength,
-//			0,
-//			_capabilities.avc._ppsLength,
-//			_videoLastTs,
-//			false)) {
-//		FATAL("Unable to feed stream");
-//		if (pOutStream->GetProtocol() != NULL) {
-//			pOutStream->GetProtocol()->EnqueueForDelete();
-//		}
-//	}
+	//	if (!pOutStream->FeedData(
+	//			_capabilities.avc._pSPS,
+	//			_capabilities.avc._spsLength,
+	//			0,
+	//			_capabilities.avc._spsLength,
+	//			_videoLastTs,
+	//			false)) {
+	//		FATAL("Unable to feed stream");
+	//		if (pOutStream->GetProtocol() != NULL) {
+	//			pOutStream->GetProtocol()->EnqueueForDelete();
+	//		}
+	//	}
+	//	if (!pOutStream->FeedData(
+	//			_capabilities.avc._pPPS,
+	//			_capabilities.avc._ppsLength,
+	//			0,
+	//			_capabilities.avc._ppsLength,
+	//			_videoLastTs,
+	//			false)) {
+	//		FATAL("Unable to feed stream");
+	//		if (pOutStream->GetProtocol() != NULL) {
+	//			pOutStream->GetProtocol()->EnqueueForDelete();
+	//		}
+	//	}
 }
 
 void InNetRTPStream::FeedAudioCodecSetup(BaseOutStream* pOutStream) {

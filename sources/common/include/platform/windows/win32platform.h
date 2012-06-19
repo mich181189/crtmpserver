@@ -135,7 +135,7 @@ typedef long long int int64_t;*/
 #define MSG_NOSIGNAL 0
 #define READ_FD _read
 #define WRITE_FD _write
-#define CLOSE_SOCKET(fd) do{ if(fd>=0) closesocket(fd);fd=-1;}while(0)
+#define CLOSE_SOCKET(fd) do{ if(fd>=0) closesocket(fd);fd=(SOCKET)-1;}while(0)
 #define LASTSOCKETERROR WSAGetLastError()
 #define SOCKERROR_CONNECT_IN_PROGRESS	WSAEWOULDBLOCK
 #define SOCKERROR_SEND_IN_PROGRESS		WSAEWOULDBLOCK
@@ -164,6 +164,7 @@ typedef long long int int64_t;*/
 #define Timestamp_init {0, 0, 0, 0, 0, 0, 0, 0, 0}
 #define snprintf sprintf_s
 #define pid_t int32_t
+#define PIOFFT __int64
 
 #define gmtime_r(_p_time_t, _p_struct_tm) *(_p_struct_tm) = *gmtime(_p_time_t);
 
@@ -207,7 +208,7 @@ typedef struct _select_event {
 #define IOVEC_IOV_BASE buf
 #define IOVEC_IOV_LEN len
 #define IOVEC_IOV_BASE_TYPE CHAR
-#define SENDMSG(s,msg,flags,sent) WSASendMsg(s,msg,flags,sent,NULL,NULL)
+#define SENDMSG(s,msg,flags,sent) WSASendMsg(s,msg,flags,(LPDWORD)(sent),NULL,NULL)
 
 #define ftell64 _ftelli64
 #define fseek64 _fseeki64
@@ -220,15 +221,15 @@ DLLEXP string lowerCase(string value);
 DLLEXP string upperCase(string value);
 DLLEXP string changeCase(string &value, bool lowerCase);
 DLLEXP string tagToString(uint64_t tag);
-DLLEXP bool setFdNonBlock(int32_t fd);
-DLLEXP bool setFdNoSIGPIPE(int32_t fd);
-DLLEXP bool setFdKeepAlive(int32_t fd);
-DLLEXP bool setFdNoNagle(int32_t fd);
-DLLEXP bool setFdReuseAddress(int32_t fd);
-DLLEXP bool setFdTTL(int32_t fd, uint8_t ttl);
-DLLEXP bool setFdMulticastTTL(int32_t fd, uint8_t ttl);
-DLLEXP bool setFdTOS(int32_t fd, uint8_t tos);
-DLLEXP bool setFdOptions(int32_t fd);
+DLLEXP bool setFdNonBlock(SOCKET fd);
+DLLEXP bool setFdNoSIGPIPE(SOCKET fd);
+DLLEXP bool setFdKeepAlive(SOCKET fd, bool isUdp);
+DLLEXP bool setFdNoNagle(SOCKET fd, bool isUdp);
+DLLEXP bool setFdReuseAddress(SOCKET fd);
+DLLEXP bool setFdTTL(SOCKET fd, uint8_t ttl);
+DLLEXP bool setFdMulticastTTL(SOCKET fd, uint8_t ttl);
+DLLEXP bool setFdTOS(SOCKET fd, uint8_t tos);
+DLLEXP bool setFdOptions(SOCKET fd, bool isUdp);
 DLLEXP bool deleteFile(string path);
 DLLEXP bool deleteFolder(string path, bool force);
 DLLEXP bool createFolder(string path, bool recursive);
@@ -249,6 +250,7 @@ DLLEXP bool listFolder(string path, vector<string> &result,
 		bool normalizeAllPaths = true, bool includeFolders = false,
 		bool recursive = true);
 DLLEXP bool moveFile(string src, string dst);
+DLLEXP void installSignal(int sig, SignalFnc pSignalFnc);
 DLLEXP void installQuitSignal(SignalFnc pQuitSignalFnc);
 DLLEXP void installConfRereadSignal(SignalFnc pConfRereadSignalFnc);
 DLLEXP time_t timegm(struct tm *tm);

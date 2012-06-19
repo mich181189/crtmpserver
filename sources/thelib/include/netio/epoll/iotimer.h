@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (c) 2010,
  *  Gavriloaie Eugen-Andrei (shiretu@gmail.com)
  *
@@ -26,7 +26,11 @@
 class IOTimer
 : public IOHandler {
 private:
+#ifndef HAS_EPOLL_TIMERS
 	static int32_t _idGenerator;
+#else /*  */
+	uint64_t _count;
+#endif /* HAS_EPOLL_TIMERS */
 public:
 	IOTimer();
 	virtual ~IOTimer();

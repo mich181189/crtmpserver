@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (c) 2010,
  *  Gavriloaie Eugen-Andrei (shiretu@gmail.com)
  *
@@ -101,7 +101,10 @@ void InNetLiveFLVStream::ReadyForSend() {
 bool InNetLiveFLVStream::IsCompatibleWithType(uint64_t type) {
 	return TAG_KIND_OF(type, ST_OUT_NET_RTMP)
 			|| TAG_KIND_OF(type, ST_OUT_NET_RTP)
-			|| TAG_KIND_OF(type, ST_OUT_FILE_HLS);
+			|| TAG_KIND_OF(type, ST_OUT_FILE_HLS)
+			|| TAG_KIND_OF(type, ST_OUT_FILE_HDS)
+        	|| TAG_KIND_OF(type, ST_OUT_FILE_TS)
+            || TAG_KIND_OF(type, ST_OUT_FILE_RTMP_FLV);
 }
 
 void InNetLiveFLVStream::GetStats(Variant &info, uint32_t namespaceId) {
@@ -221,8 +224,8 @@ bool InNetLiveFLVStream::InitializeAudioCapabilities(uint8_t *pData, uint32_t le
 		FATAL("InitAudioAAC failed");
 		return false;
 	}
-	FINEST("Cached the AAC audio codec initialization: %u",
-			GETAVAILABLEBYTESCOUNT(_audioCodecInit));
+	//	FINEST("Cached the AAC audio codec initialization: %u",
+	//			GETAVAILABLEBYTESCOUNT(_audioCodecInit));
 	return true;
 }
 
@@ -242,8 +245,8 @@ bool InNetLiveFLVStream::InitializeVideoCapabilities(uint8_t *pData, uint32_t le
 		return false;
 	}
 
-	FINEST("Cached the h264 video codec initialization: %u",
-			GETAVAILABLEBYTESCOUNT(_videoCodecInit));
+	//	FINEST("Cached the h264 video codec initialization: %u",
+	//			GETAVAILABLEBYTESCOUNT(_videoCodecInit));
 
 	return true;
 }

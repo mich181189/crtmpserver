@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (c) 2010,
  *  Gavriloaie Eugen-Andrei (shiretu@gmail.com)
  *
@@ -32,7 +32,7 @@ protected:
 	vector<MediaFrame> _frames;
 	uint32_t _audioSamplesCount;
 	uint32_t _videoSamplesCount;
-	Variant _metadata;
+	Variant &_metadata;
 	string _mediaFilePath;
 	string _seekFilePath;
 	string _metaFilePath;
@@ -45,17 +45,17 @@ public:
 
 	/*!
 		@brief This functions do things like opening the media file, building frames, saving the meta, etc.
-	*/
+	 */
 	bool Process();
 
 	/*!
 		@brief Returns the meta data
-	*/
+	 */
 	Variant GetMetadata();
 
 	/*!
 		@brief Returns the media file
-	*/
+	 */
 	MediaFile &GetMediaFile();
 protected:
 	static bool CompareFrames(const MediaFrame &frame1, const MediaFrame &frame2);

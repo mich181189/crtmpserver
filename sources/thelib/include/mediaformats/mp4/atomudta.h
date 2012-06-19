@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (c) 2010,
  *  Gavriloaie Eugen-Andrei (shiretu@gmail.com)
  *
@@ -23,20 +23,14 @@
 
 #include "mediaformats/mp4/boxatom.h"
 
-class AtomMETA;
-class AtomMetaField;
-
 class AtomUDTA
 : public BoxAtom {
 private:
-	AtomMETA *_pMETA;
-	vector<AtomMetaField *> _metaFields;
+	Variant _metadata;
 public:
 	AtomUDTA(MP4Document *pDocument, uint32_t type, uint64_t size, uint64_t start);
 	virtual ~AtomUDTA();
-
-	virtual bool Read();
-
+	Variant &GetMetadata();
 protected:
 	virtual bool AtomCreated(BaseAtom *pAtom);
 };

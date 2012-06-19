@@ -245,11 +245,12 @@ bool BaseOutNetRTMPStream::FeedData(uint8_t *pData, uint32_t dataLength,
 				_pRTMPProtocol->EnqueueForOutbound();
 				return true;
 			}
-
+#ifndef WIN32
 			if ((pData[0] >> 4) != 1) {
 				_pRTMPProtocol->EnqueueForOutbound();
 				return true;
 			}
+#endif /* WIN32 */
 
 			if ((pData[0] == 0x17) && (pData[1] == 0)) {
 				// h264 codec setup. Keep _isFirstVideoFrame == true
@@ -464,8 +465,8 @@ void BaseOutNetRTMPStream::SignalDetachedFromInStream() {
 		//2. notify onPlayStatus code="NetStream.Play.Complete", bytes=xxx, duration=yyy, level status
 		message = StreamMessageFactory::GetNotifyOnPlayStatusPlayComplete(
 				_pChannelAudio->id, _rtmpStreamId, 0, false,
-				_completeMetadata[META_FILE_SIZE],
-				(double) _completeMetadata[META_FILE_DURATION] / 1000);
+				_completeMetadata[META_RTMP_META][META_FILE_SIZE],
+				(double) _completeMetadata[META_RTMP_META][META_DURATION]);
 		TRACK_MESSAGE("Message:\n%s", STR(message.ToString()));
 		if (!_pRTMPProtocol->SendMessage(message)) {
 			FATAL("Unable to send message");
@@ -661,8 +662,8 @@ void BaseOutNetRTMPStream::SignalStreamCompleted() {
 	//1. notify onPlayStatus code="NetStream.Play.Complete", bytes=xxx, duration=yyy, level status
 	Variant message = StreamMessageFactory::GetNotifyOnPlayStatusPlayComplete(
 			_pChannelAudio->id, _rtmpStreamId, 0, false,
-			_completeMetadata[META_FILE_SIZE],
-			(double) _completeMetadata[META_FILE_DURATION] / 1000);
+			_completeMetadata[META_RTMP_META][META_FILE_SIZE],
+			(double) _completeMetadata[META_RTMP_META][META_DURATION]);
 	TRACK_MESSAGE("Message:\n%s", STR(message.ToString()));
 	if (!_pRTMPProtocol->SendMessage(message)) {
 		FATAL("Unable to send message");

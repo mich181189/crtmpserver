@@ -81,7 +81,11 @@ map<uint32_t, IOHandler *> & IOHandlerManager::GetDeadHandlers() {
 	return _deadIOHandlers;
 }
 
-FdStats &IOHandlerManager::GetStats() {
+FdStats &IOHandlerManager::GetStats(bool updateSpeeds) {
+#ifdef GLOBALLY_ACCOUNT_BYTES
+	if (updateSpeeds)
+		_fdStats.UpdateSpeeds();
+#endif /* GLOBALLY_ACCOUNT_BYTES */
 	return _fdStats;
 }
 
@@ -138,7 +142,7 @@ void IOHandlerManager::Shutdown() {
 	_eventsSize = 0;
 
 	if (_activeIOHandlers.size() != 0 || _deadIOHandlers.size() != 0) {
-		FATAL("Incomplete shutdown!!!");
+		FATAL("Incomplete shutdown!");
 	}
 }
 
@@ -299,6 +303,8 @@ bool IOHandlerManager::Pulse() {
 
 	if (result < 0) {
 		int32_t error = errno;
+		if (error == EINTR)
+			return true;
 		FATAL("kevent failed: %d = `%s`", error, strerror(error));
 		return false;
 	}
