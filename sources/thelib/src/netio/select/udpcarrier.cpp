@@ -166,7 +166,7 @@ UDPCarrier* UDPCarrier::Create(string bindIp, uint16_t bindPort,
 		if ((testVal > 0xe0000000) && (testVal < 0xefffffff)) {
 			INFO("Subscribe to multicast %s:%"PRIu16, STR(bindIp), bindPort);
 			int activateBroadcast = 1;
-			if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, &activateBroadcast,
+			if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, reinterpret_cast<char*>(&activateBroadcast),
 					sizeof (activateBroadcast)) != 0) {
 				int err = errno;
 				FATAL("Unable to activate SO_BROADCAST on the socket: %d", err);

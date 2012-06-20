@@ -498,7 +498,7 @@ bool deleteFolder(string path, bool force) {
 					FATAL("Unable to delete subfolder %s", STR(subFolder));
 					return false;
 				}
-				if (!RemoveDirectory(subFolder)) {
+        if (!RemoveDirectory(subFolder.c_str())) {
 					FATAL("Unable to delete subfolder %s", STR(subFolder));
 					return false;
 				}
@@ -517,7 +517,7 @@ bool deleteFolder(string path, bool force) {
 
 bool createFolder(string path, bool recursive) {
 	char DirName[256];
-	char* p = STR(path);
+	char* p = const_cast<char*>(STR(path));
 	char* q = DirName;
 	while (*p) {
 		if (('\\' == *p) || ('/' == *p)) {

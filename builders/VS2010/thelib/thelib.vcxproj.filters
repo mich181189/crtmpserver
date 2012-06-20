@@ -614,6 +614,30 @@
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\rtmp\monitorrtmpprotocol.cpp">
       <Filter>Source Files\protocols\rtmp</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\sources\thelib\src\netio\fdstats.cpp">
+      <Filter>Source Files\netio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomuuid.cpp">
+      <Filter>Source Files\mediaformats\mp4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomafrt.cpp">
+      <Filter>Source Files\mediaformats\mp4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomabst.cpp">
+      <Filter>Source Files\mediaformats\mp4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomafra.cpp">
+      <Filter>Source Files\mediaformats\mp4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomasrt.cpp">
+      <Filter>Source Files\mediaformats\mp4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sources\thelib\src\protocols\variant\jsonvariantprotocol.cpp">
+      <Filter>Source Files\protocols\variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\sources\thelib\src\protocols\rtp\nattraversalprotocol.cpp">
+      <Filter>Source Files\protocols\rtp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\sources\thelib\include\application\baseappprotocolhandler.h">
@@ -1107,6 +1131,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\sources\thelib\include\protocols\rtmp\monitorrtmpprotocol.h">
       <Filter>Header Files\protocols\rtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\sources\thelib\include\netio\fdstats.h">
+      <Filter>Header Files\netio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -78,6 +78,8 @@ public:
 	void SetAudioVideoPidDescriptors(_PIDDescriptor *pAudioPidDescriptor,
 			_PIDDescriptor *pVideoPidDescriptor);
 
+  double GetFeedTime();
+
 	bool FeedData(uint8_t *pData, uint32_t length, bool packetStart,
 			bool isAudio, int8_t sequenceNumber);
 	virtual bool FeedData(uint8_t *pData, uint32_t dataLength,
