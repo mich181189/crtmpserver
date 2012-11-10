@@ -190,6 +190,8 @@ public:
 	uint32_t MapDenseSize();
 	void PushToArray(Variant value);
 
+  bool isNull();
+
 	map<string, Variant>::iterator begin();
 	map<string, Variant>::iterator end();
 

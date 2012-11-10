@@ -237,6 +237,11 @@ void Variant::Reset(bool isUndefined) {
 	memset(&_value, 0, sizeof (_value));
 }
 
+bool Variant::isNull()
+{
+  return _type == V_NULL;
+}
+
 string Variant::ToString(string name, uint32_t indent) {
 	string result = "";
 	string strIndent = string(indent * 4, ' ');
