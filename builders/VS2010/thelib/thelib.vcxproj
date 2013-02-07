@@ -135,7 +135,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\..\3rdparty\openssl_build_win32\include;C:\OpenSSL-Win32\include;..\..\..\sources\common\include;..\..\..\sources\thelib\include;..\..\..\3rdparty\lua-dev;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_PROTOCOL_CLI;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_DEBUG;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_MEDIA_TS;HAS_PROTOCOL_CLI;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_DEBUG;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -158,7 +158,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\..\3rdparty\openssl_build_win32\include;C:\OpenSSL-Win32\include;..\..\..\sources\common\include;..\..\..\sources\thelib\include;..\..\..\3rdparty\lua-dev;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_PROTOCOL_CLI;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_DEBUG;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_MEDIA_TS;HAS_PROTOCOL_CLI;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_DEBUG;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -179,7 +179,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\..\sources\common\include;..\..\..\sources\thelib\include;..\..\..\3rdparty\lua-dev;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_PROTOCOL_CLI;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_DEBUG;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_MEDIA_TS;HAS_PROTOCOL_CLI;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_DEBUG;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -202,7 +202,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\..\sources\common\include;..\..\..\sources\thelib\include;..\..\..\3rdparty\lua-dev;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_PROTOCOL_CLI;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_DEBUG;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_MEDIA_TS;HAS_PROTOCOL_CLI;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_DEBUG;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -224,7 +224,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>..\..\..\3rdparty\openssl_build_win32\include;..\..\..\sources\common\include;..\..\..\sources\thelib\include;..\..\..\3rdparty\lua-dev;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_MEDIA_TS;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -249,7 +249,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>..\..\..\3rdparty\openssl_build_win32\include;..\..\..\sources\common\include;..\..\..\sources\thelib\include;..\..\..\3rdparty\lua-dev;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_MEDIA_TS;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -273,7 +273,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>..\..\..\sources\common\include;..\..\..\sources\thelib\include;..\..\..\3rdparty\lua-dev;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_MEDIA_TS;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -298,7 +298,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>..\..\..\sources\common\include;..\..\..\sources\thelib\include;..\..\..\3rdparty\lua-dev;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LITTLE_ENDIAN_BYTE_ALIGNED;NET_SELECT;HAS_LUA;HAS_PROTOCOL_HTTP;HAS_PROTOCOL_RTMP;HAS_PROTOCOL_RTP;HAS_PROTOCOL_LIVEFLV;HAS_PROTOCOL_TS;HAS_PROTOCOL_VAR;HAS_MEDIA_TS;HAS_MEDIA_MP3;HAS_MEDIA_MP4;HAS_MEDIA_FLV;VM_LUA;HandleTSVideoData=HandleVideoData_version3;CreateRTCPPacket=CreateRTCPPacket_mystyle_only_once;FeedDataAudioMPEG4Generic=FeedDataAudioMPEG4Generic_one_by_one;WIN32;_WINDOWS;_USRDLL;THELIB_EXPORTS;_CRT_SECURE_NO_WARNINGS;CreateRTCPPacket=CreateRTCPPacket_mystyle;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -330,58 +330,67 @@
     <ClCompile Include="..\..\..\sources\thelib\src\application\clientapplicationmanager.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\configuration\configfile.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\configuration\module.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomabst.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomafra.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomafrt.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomasrt.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomavc1.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomavcc.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomco64.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomctts.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomdata.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomdinf.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomdref.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomesds.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomftyp.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomhdlr.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomilst.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atommdhd.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atommdia.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atommeta.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atommetafield.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atommfhd.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomminf.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atommoof.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atommoov.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atommp4a.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atommvex.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atommvhd.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomnull.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomsmhd.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomstbl.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomstco.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomstsc.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomstsd.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomstss.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomstsz.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomstts.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomtfhd.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomtkhd.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomtraf.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomtrak.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomtrex.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomtrun.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomudta.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomurl.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomuuid.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomvmhd.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\atomwave.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\baseatom.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\boxatom.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\ignoredatom.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\mp4document.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\versionedatom.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp4\versionedboxatom.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mediafile.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomabst.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomafra.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomafrt.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomasrt.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomavc1.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomavcc.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomco64.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomctts.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomdata.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomdinf.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomdref.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomesds.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomftyp.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomhdlr.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomilst.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atommdhd.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atommdia.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atommeta.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atommetafield.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atommfhd.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomminf.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atommoof.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atommoov.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atommp4a.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atommvex.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atommvhd.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomnull.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomsmhd.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomstbl.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomstco.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomstsc.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomstsd.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomstss.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomstsz.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomstts.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomtfhd.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomtkhd.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomtraf.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomtrak.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomtrex.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomtrun.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomudta.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomurl.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomuuid.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomvmhd.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\atomwave.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\baseatom.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\boxatom.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\ignoredatom.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\mp4document.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\versionedatom.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp4\versionedboxatom.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\streammetadataresolver.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\ts\avcontext.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\ts\streamdescriptors.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\ts\tsdocument.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\ts\tsframereader.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\ts\tspacketpat.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\ts\tspacketpmt.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\ts\tsparser.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\netio\fdstats.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\netio\select\inboundnamedpipecarrier.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\netio\select\iohandler.cpp" />
@@ -428,8 +437,6 @@
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\ssl\outboundsslprotocol.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\tcpprotocol.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\udpprotocol.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\protocols\dns\inbounddnsresolverprotocol.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\protocols\dns\outbounddnsresolverprotocol.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\http\basehttpappprotocolhandler.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\http\basehttpprotocol.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\http\inboundhttpprotocol.cpp" />
@@ -457,10 +464,6 @@
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\ts\basetsappprotocolhandler.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\ts\inboundtsprotocol.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\ts\innettsstream.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\protocols\ts\pidtypes.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\protocols\ts\streamdescriptors.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\protocols\ts\tspacketpat.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\protocols\ts\tspacketpmt.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\liveflv\baseliveflvappprotocolhandler.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\liveflv\inboundliveflvprotocol.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\liveflv\innetliveflvstream.cpp" />
@@ -469,10 +472,10 @@
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\variant\binvariantprotocol.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\variant\jsonvariantprotocol.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\protocols\variant\xmlvariantprotocol.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\basemediadocument.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\flv\flvdocument.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp3\id3parser.cpp" />
-    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\mp3\mp3document.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\basemediadocument.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\flv\flvdocument.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp3\id3parser.cpp" />
+    <ClCompile Include="..\..\..\sources\thelib\src\mediaformats\readers\mp3\mp3document.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\streaming\baseinfilestream.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\streaming\baseinnetstream.cpp" />
     <ClCompile Include="..\..\..\sources\thelib\src\streaming\baseinstream.cpp" />
@@ -548,6 +551,23 @@
     <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\mp4\mp4document.h" />
     <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\mp4\versionedatom.h" />
     <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\mp4\versionedboxatom.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\mediafile.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\mediaframe.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\streammetadataresolver.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\ts\avcontext.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\ts\piddescriptor.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\ts\pidtypes.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\ts\streamdescriptors.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\ts\tsboundscheck.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\ts\tsdocument.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\ts\tsframereader.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\ts\tsframereaderinterface.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\ts\tspacketheader.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\ts\tspacketpat.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\ts\tspacketpmt.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\ts\tsparser.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\ts\tsparsereventsink.h" />
+    <ClInclude Include="..\..\..\sources\thelib\include\mediaformats\readers\ts\tsstreaminfo.h" />
     <ClInclude Include="..\..\..\sources\thelib\include\netio\fdstats.h" />
     <ClInclude Include="..\..\..\sources\thelib\include\netio\netio.h" />
     <ClInclude Include="..\..\..\sources\thelib\include\netio\select\inboundnamedpipecarrier.h" />
