@@ -136,7 +136,10 @@ bool IOBuffer::ReadFromUDPFd(int32_t fd, int32_t &recvAmount, sockaddr_in &peerA
 	} else {
 		int err = LASTSOCKETERROR;
 #ifdef WIN32
-		if (err == SOCKERROR_RECV_CONN_RESET) {
+		//Patch from https://groups.google.com/forum/#!msg/c-rtmp-server/6W0iHZ8fS_w/b4c5ODm1NfUJ
+		if ((err == WSAECONNRESET) ||
+			(err == WSAENETRESET) ||
+			(err == WSAEMSGSIZE)) {
 			WARN("Windows is stupid enough to issue a CONNRESET on a UDP socket. See http://support.microsoft.com/?kbid=263823 for details");
 			SANITY_INPUT_BUFFER;
 			return true;
